@@ -19,97 +19,92 @@ bot = commands.Bot(command_prefix = '>')
 @bot.command()
 @commands.has_permissions(administrator = True)
 async def enable(ctx, extension):
-    client.load_extension(f'cogs.{extension}')
+    bot.load_extension(f'cogs.{extension}')
     embed = discord.Embed(title = ':white_check_mark: **Successfully Enabled ' + extension + '.**')
     await ctx.send(embed = embed)
 
 @bot.command()
 @commands.has_permissions(administrator = True)
 async def disable(ctx,extension):
-    client.unload_extension(f'cogs.{extension}')
+    bot.unload_extension(f'cogs.{extension}')
     embed = discord.Embed(title = ':white_check_mark: **Successfully disabled ' + extension + '.**')
     await ctx.send(embed = embed)
 
 @bot.command()
 @commands.has_permissions(administrator = True)
 async def reload(ctx,extension):
-    client.unload_extension(f'cogs.{extension}')
-    client.load_extension(f'cogs.{extension}')
+    bot.unload_extension(f'cogs.{extension}')
+    bot.load_extension(f'cogs.{extension}')
     embed = discord.Embed(title = ':white_check_mark: **Successfully reloaded ' + extension + '.**')
     await ctx.send(embed = embed)
 
 
 for filename in os.listdir('./cogs'):
     if filename.endswith(".py"):
-        client.load_extension(f'cogs.{filename[:-3]}')
+        bot.load_extension(f'cogs.{filename[:-3]}')
 
 
 @bot.event
 async def on_ready():
-    await bot.change_presence(activity=discord.Watching(name="General Chat!"))
+    await bot.change_presence(activity=discord.Activity(type = discord.ActivityType.watching, name = " General Chat!"))
     print('<------------------------------>')
     print('Coding Comunity Bot is ready')
     print('<------------------------------>')
 
+@bot.command()
+async def ping(ctx):
+    embed = discord.Embed(title = 'Pong! {0}'.format(round(bot.latency, 1)))
+    await ctx.send(embed=embed)
 
 
+#help command
+bot.remove_command('help')
+@bot.group()
+async def help(ctx):
+    if ctx.invoked_subcommand is None:
+            embed=discord.Embed()
+            embed=discord.Embed(title='Bot Commands', description='\n\n`>help mod` :hammer_pick: ➣ For moderation commands\n`>help fun` :zany_face: ➣ For Epic fun commands\n`>help info` :information_source: ➣ For infomation commands\n`>help music` ➣ For the music commands')
+            await ctx.send(embed=embed)
 
-has_avatar = commands.check(lambda ctx: ctx.avatar_url != ctx.author.default_avatar_url)
+@help.command()
+async def music(ctx):
+            embed=discord.Embed()
+            embed=discord.Embed(title=':musical_note: Music Commands! :musical_note:', description='\n\n`>play` - plays a song\n`>queue` - shows the guilds queue\n`>remove` - removes a song from a guilds queue\n`>skip` - skips a song from the guilds queue\n`>songinfo` - shows info on the song you are playing\n`>stop` - stops the player\n`>fskip` - force skips the song\n`>fremove` - force removes a song from the queue')
+            await ctx.send(embed=embed)
 
-@has_avatar
-@bot.event
-async def on_member_join(member):
-        try:
-            alpha = ('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z')
-            numeric = ('1','2','3','4','5','6','7','8','9','0')
-            final = []
+@help.command()
+async def mod(ctx):
+            embed=discord.Embed()
+            embed=discord.Embed(title=':hammer_pick: Moderation Commands :hammer_pick:', description='\n\n`>clear` - This command clears a spesified  ammount of messages from a text channel\n`>mute` - Mutes the spesified player\n`>unmute` - This command unmutes a user.\n`>kick` - Kicks a spesified user\n`>ban` - This command bans a user.\n`>unban` - This command bans a user.\n`>lockdown` - This locksdown a certain channel.\n`>warn` - This warns the user. \n`>removewarn` - This removes a warn.\n`>warns` - This shows warns. ')
+            await ctx.send(embed=embed)
 
-            member = member
-            for i in range(6):
-                des = ('alpha', 'numeric')
-                an = random.choice(des)
-                if an == 'alpha':
-                    a = random.choice(alpha)
-                    cap = ('lower', 'upper')
-                    caps = random.choice(cap)
-                    if caps == 'lower':
-                        final.append(a.lower())
-                    else:
-                        final.append(a.upper())
-                else:
-                    a = random.choice(numeric)
-                    final.append(a)
-            code = ''.join(map(str, final))
-            if code.isnumeric() == True:
-                print('Nope')
-            else:
-                img = Image.new('RGB', (360, 180), color = 'white')
+#fun help command
+@help.command()
+async def fun(ctx):
+            embed=discord.Embed(color=discord.Colour.orange())
+            embed=discord.Embed(title=':zany_face: Fun Commands :zany_face:', description='\n\n`>8ball` - This command you say _8ball then ask your question!\n`>ping` - Lets you play ping pong with the bot!\n`>whisper` - lets you send a dm to someone.')
+            await ctx.send(embed=embed)
+            
+@help.command()
+async def info(ctx):
+            embed=discord.Embed(color=discord.Colour.orange())
+            embed=discord.Embed(title=':information_source: info Commands :information_source:', description='\n\n`>whois` - sends the mentioned users info!!!\n`>avatar` - sends the mentioned persons PFP!!!\n`>info` - info about the bot!\n`>server` - info about the server.\n`>channelinfo` - info about the channel.')   
+            await ctx.send(embed=embed)
 
-                d = ImageDraw.Draw(img)
-                font = ImageFont.truetype("Futura.ttf", 90)
-                d.text((3, 9.2), f"{code}", font=font, fill=(0,0,0))
-                img.save('back.png')
-
-
-            embed = discord.Embed(title='Type the code below to get verified!')
-            embed.set_image(url="attachment://back.png")
-            image = discord.File("back.png")
-            await member.send(embed=embed, file=image)
-            if member.id == None:
-                await asyncio.sleep(5)
-                print('made it 1')
-                def check(x):
-                    return x.author == member
-                print('made it 2')
-                verif = await bot_two.wait_for('message',check = check, timeout = 300)
-                print(verif)
-                if verif.content == code:
-                    await member.send('You passed the verification process!')
-                else:
-                    await member.send('You failed the verification process!\nTry again!')
-        except Exception:
-            traceback.print_exc()
-
+@bot.command(aliases=['whois', 'userinfo'])
+async def user(ctx, member: discord.Member):
+  roles = [role for role in member.roles]
+  embed = discord.Embed(color=member.color, timestamp=datetime.datetime.utcnow())
+  embed.set_author(name=f"{member}", icon_url=member.avatar_url)
+  embed.set_thumbnail(url=member.avatar_url)
+  embed.add_field(name="Joined at:", value=member.joined_at.strftime("%a, %#d %B %Y, %I:%M %p"))
+  embed.add_field(name='Registered at:', value=member.created_at.strftime('%a, %#d %B %Y, %I:%M %p'))
+  embed.add_field(name='Bot?', value=f'{member.bot}')
+  embed.add_field(name='Status?', value=f'{member.status}')
+  embed.add_field(name='Top Role?', value=f'{member.top_role}')
+  embed.add_field(name=f"Roles ({len(roles)})", value=" ".join([role.mention for role in roles]))
+  embed.set_footer(icon_url=member.avatar_url, text=f'Requested By: {ctx.author.name}')
+  await ctx.send(embed=embed)
 
 @bot.command()
 async def warn(ctx , member : discord.Member ,* , reason = "No reason Provided"):
@@ -211,57 +206,6 @@ async def verify(ctx):
         except Exception:
             traceback.print_exc()
 
-@bot.command(aliases=['whois', 'userinfo'])
-async def user(ctx, member: discord.Member):
-  roles = [role for role in member.roles]
-  embed = discord.Embed(color=member.color, timestamp=datetime.datetime.utcnow())
-  embed.set_author(name=f"{member}", icon_url=member.avatar_url)
-  embed.set_thumbnail(url=member.avatar_url)
-  embed.add_field(name="Joined at:", value=member.joined_at.strftime("%a, %#d %B %Y, %I:%M %p"))
-  embed.add_field(name='Registered at:', value=member.created_at.strftime('%a, %#d %B %Y, %I:%M %p'))
-  embed.add_field(name='Bot?', value=f'{member.bot}')
-  embed.add_field(name='Status?', value=f'{member.status}')
-  embed.add_field(name='Top Role?', value=f'{member.top_role}')
-  embed.add_field(name=f"Roles ({len(roles)})", value=" ".join([role.mention for role in roles]))
-  embed.set_footer(icon_url=member.avatar_url, text=f'Requested By: {ctx.author.name}')
-  await ctx.send(embed=embed)
-            
-#help command
-bot.remove_command('help')
-@bot.group()
-async def help(ctx):
-    if ctx.invoked_subcommand is None:
-            embed=discord.Embed()
-            embed=discord.Embed(title='Bot Commands', description='\n\n`?help mod` :hammer_pick: ➣ For moderation commands\n`?help fun` :zany_face: ➣ For Epic fun commands\n`?help currency` :money_with_wings: ➣ For currency commands\n`?help info` :information_source: ➣ For infomation commands\n`?help music` ➣ For the music commands')
-            await ctx.send(embed=embed)
-
-@help.command()
-async def music(ctx):
-            embed=discord.Embed()
-#            embed=discord.Embed(title=':musical_note: Music Commands! :musical_note:', description='\n\n`>play` - plays a song\n`>queue` - shows the guilds queue\n`>remove` - removes a song from a guilds queue\n`>skip` - skips a song from the guilds queue\n`>songinfo` - shows info on the song you are playing\n`>stop` - stops the player\n`>fskip` - force skips the song\n`>fremove` - force removes a song from the queue')
-            embed=discord.Embed(title=':musical_note: Music Commands coming soon!:musical_note:')
-            await ctx.send(embed=embed)
-
-@help.command()
-async def mod(ctx):
-            embed=discord.Embed()
-            embed=discord.Embed(title=':hammer_pick: Moderation Commands :hammer_pick:', description='\n\n`>clear` - This command clears a spesified  ammount of messages from a text channel\n`>mute` - Mutes the spesified player\n`>unmute` - This command unmutes a user.\n`>kick` - Kicks a spesified user\n`>ban` - This command bans a user.\n`>unban` - This command bans a user.\n`>lockdown` - This locksdown a certain channel.\n`>warn` - This warns the user. \n`>removewarn` - This removes a warn.\n`>warns` - This shows warns. ')
-            await ctx.send(embed=embed)
-
-#fun help command
-@help.command()
-async def fun(ctx):
-            embed=discord.Embed(color=discord.Colour.orange())
-            embed=discord.Embed(title=':zany_face: Fun Commands :zany_face:', description='\n\n`>8ball` - This command you say _8ball then ask your question!\n`>ping` - Lets you play ping pong with the bot!\n`>whisper` - lets you send a dm to someone.')
-            await ctx.send(embed=embed)
-            
-@help.command()
-async def info(ctx):
-            embed=discord.Embed(color=discord.Colour.orange())
-            embed=discord.Embed(title=':information_source: info Commands :information_source:', description='\n\n`>whois` - sends the mentioned users info!!!\n`>avatar` - sends the mentioned persons PFP!!!\n`>info` - info about the bot!\n`>server` - info about the server.\n`>channelinfo` - info about the channel.')   
-            await ctx.send(embed=embed)
-            
-            
 @bot.event
 async def on_command_error(ctx, error):
     embed = discord.Embed(title='',color=discord.Color.red())
@@ -281,5 +225,6 @@ async def on_command_error(ctx, error):
         pass
     if isinstance(error, commands.BadUnionArgument):
         pass
+            
             
 bot.run('')
