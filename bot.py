@@ -12,16 +12,16 @@ from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 
-bot_two = commands.Bot(command_prefix = '>')
+bot = commands.Bot(command_prefix = '>')
 
 
 
 
 
 
-@bot_two.event
+@bot.event
 async def on_ready():
-    await bot_two.change_presence(activity=discord.Watching(name="General Chat!"))
+    await bot.change_presence(activity=discord.Watching(name="General Chat!"))
     print('<------------------------------>')
     print('Coding Comunity Bot is ready')
     print('<------------------------------>')
@@ -32,7 +32,7 @@ async def on_ready():
 has_avatar = commands.check(lambda ctx: ctx.avatar_url != ctx.author.default_avatar_url)
 
 @has_avatar
-@bot_two.event
+@bot.event
 async def on_member_join(member):
         try:
             alpha = ('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z')
@@ -86,7 +86,7 @@ async def on_member_join(member):
             traceback.print_exc()
 
 
-@bot_two.command()
+@bot.command()
 async def warn(ctx , member : discord.Member ,* , reason = "No reason Provided"):
   with open('warnings.json','r') as f:
     warns = json.load(f)
@@ -106,7 +106,7 @@ async def warn(ctx , member : discord.Member ,* , reason = "No reason Provided")
     embed.add_field(name='Reason:', value=f'{reason}')
     await member.send(embed=embed)
     
-@bot_two.command()
+@bot.command()
 async def removewarn(ctx, member: discord.Member, num: int, *, reason='No reason provided.'):
   with open('warnings.json' , 'r') as f:
     warns = json.load(f)
@@ -120,7 +120,7 @@ async def removewarn(ctx, member: discord.Member, num: int, *, reason='No reason
     await member.send(embed=embed)
 
         
-@bot_two.command()
+@bot.command()
 async def warns(ctx , member : discord.Member):
   with open('warnings.json', 'r') as f:
     warns = json.load(f)
@@ -132,7 +132,7 @@ async def warns(ctx , member : discord.Member):
   await ctx.send(embed = warnings)
 
 
-@bot_two.command()
+@bot.command()
 async def verify(ctx):
         try:
             alpha = ('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z')
@@ -186,4 +186,24 @@ async def verify(ctx):
         except Exception:
             traceback.print_exc()
 
-bot_two.run('')
+@bot.event
+async def on_command_error(ctx, error):
+    embed = discord.Embed(title='',color=discord.Color.red())
+    if isinstance(error, commands.BadArgument):
+        pass
+    if isinstance(error, commands.MissingPermissions):
+        embed.add_field(name='Invalid Permissions', value=f'You dont have {error.missing_perms} permissions')
+        await ctx.send(embed=embed)
+    if isinstance(error, commands.CommandNotFound):
+        pass
+    if isinstance(error, commands.CommandOnCooldown):
+        if error.retry_after < 60:
+            f=round(error.retry_after) / 60
+            embed.add_field(name=f'Your on cooldown!', value=f'Stop trying. Wait {round(error.retry_after, 0)} seconds and retry again.')
+            await ctx.send(embed=embed)
+    if isinstance(error, commands.ArgumentParsingError):
+        pass
+    if isinstance(error, commands.BadUnionArgument):
+        pass
+            
+bot.run('')
