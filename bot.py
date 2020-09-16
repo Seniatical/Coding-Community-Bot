@@ -12,9 +12,8 @@ from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 
-bot_two = commands.Bot(command_prefix = '!')
+bot_two = commands.Bot(command_prefix = '>')
 
-os.chdir(r'C:\Users\LeoJo\Desktop\discord bots\Coding-Community-Bot')
 
 
 
@@ -22,7 +21,7 @@ os.chdir(r'C:\Users\LeoJo\Desktop\discord bots\Coding-Community-Bot')
 
 @bot_two.event
 async def on_ready():
-    await bot_two.change_presence(activity=discord.Game(name="LOL"))
+    await bot_two.change_presence(activity=discord.Watching(name="General Chat!"))
     print('<------------------------------>')
     print('Coding Comunity Bot is ready')
     print('<------------------------------>')
