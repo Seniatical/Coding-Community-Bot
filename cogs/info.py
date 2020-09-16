@@ -5,8 +5,8 @@ from discord.ext import commands
 
 class Info(commands.Cog):
 
-    def __init__(self, client):
-        self.client = client
+    def __init__(self, bot):
+        self.bot = bot
 
 
     @commands.command()
@@ -36,5 +36,5 @@ class Info(commands.Cog):
 
 
 
-def setup(client):
-    client.add_cog(Info(client))
+def setup(bot):
+    bot.add_cog(Info(bot))
