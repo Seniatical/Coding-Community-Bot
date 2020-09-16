@@ -31,19 +31,7 @@ class Info(commands.Cog):
             embed.add_field(name = "Guild created at: ", value = str(ctx.guild.created_at.strftime("%a, %d %B %Y, %I:%M %p UTC")))
             await ctx.send(embed =  embed)
 
-    @commands.command(aliases = ['channelstats'])
-    async def channelinfo(self, ctx,channel:discord.TextChannel):
-            nsfw = self.get_channel(channel.id).is_nsfw()
-            news = self.get_channel(channel.id).is_news()
-            embed = discord.Embed(title = 'Channel Infomation: ' + str(channel), description = 'Channel Stats: ', 
-            colour = discord.Colour.from_rgb(54, 151, 255))
-            embed.add_field(name = 'Channel Name: ', value = str(channel.name))
-            embed.add_field(name = "Channel's NSFW Status: ", value = str(nsfw))
-            embed.add_field(name = "Channel's id: " , value = str(channel.id))
-            embed.add_field(name = 'Channel Created At: ', value = str(channel.created_at.strftime("%a, %d %B %Y, %I:%M %p UTC")))
-            embed.add_field(name = 'Channel Type: ', value = str(channel.type))
-            embed.add_field(name = "Channel's Announcement Status: ", value = str(news))
-            await ctx.send(embed = embed)
+
 
 
 
