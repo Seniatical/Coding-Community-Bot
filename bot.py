@@ -239,7 +239,7 @@ async def mod(ctx):
 async def fun(ctx):
             embed=discord.Embed(color=discord.Colour.orange())
 #            embed=discord.Embed(title=':zany_face: Fun Commands :zany_face:', description='\n\n`?8ball` - This command you say _8ball then ask your question!\n`?ping` - Lets you play ping pong with the bot!\n`?whisper` - lets you send a dm to someone.')
-            embed=discord.Embed(title=':zany_face: Fun Commands coming soon! :zany_face:'
+            embed=discord.Embed(title=':zany_face: Fun Commands coming soon! :zany_face:')
             await ctx.send(embed=embed)
             
 @help.command()
