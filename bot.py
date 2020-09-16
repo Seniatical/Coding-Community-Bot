@@ -187,4 +187,4 @@ async def verify(ctx):
         except Exception:
             traceback.print_exc()
 
-bot_two.run('NzU1NDc5NTEwMzg3OTE2ODcx.X2D5Hw.Ag3KgzFM7-TlRugAr9eELh2FOMA')
+bot_two.run('')
