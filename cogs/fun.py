@@ -45,7 +45,6 @@ class Fun(commands.Cog):
             embed=discord.Embed(color=discord.Colour.orange())
             embed=discord.Embed(title='Someone Whispered To You!')
             embed.add_field(name='Message: '+ str(content), value="From"  + str(ctx.author.mention))
-            embed.set_footer(text="Coded by daftscientist#8570 | CereBro | User ID: " + str(ctx.message.author.id))
             await member.send(embed=embed)
             await ctx.message.delete()
 
