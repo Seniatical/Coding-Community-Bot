@@ -211,6 +211,20 @@ async def verify(ctx):
         except Exception:
             traceback.print_exc()
 
+@bot.command(aliases=['whois', 'userinfo'])
+async def user(ctx, member: discord.Member):
+  roles = [role for role in member.roles]
+  embed = discord.Embed(color=member.color, timestamp=datetime.datetime.utcnow())
+  embed.set_author(name=f"{member}", icon_url=member.avatar_url)
+  embed.set_thumbnail(url=member.avatar_url)
+  embed.add_field(name="Joined at:", value=member.joined_at.strftime("%a, %#d %B %Y, %I:%M %p"))
+  embed.add_field(name='Registered at:', value=member.created_at.strftime('%a, %#d %B %Y, %I:%M %p'))
+  embed.add_field(name='Bot?', value=f'{member.bot}')
+  embed.add_field(name='Status?', value=f'{member.status}')
+  embed.add_field(name='Top Role?', value=f'{member.top_role}')
+  embed.add_field(name=f"Roles ({len(roles)})", value=" ".join([role.mention for role in roles]))
+  embed.set_footer(icon_url=member.avatar_url, text=f'Requested By: {ctx.author.name}')
+  await ctx.send(embed=embed)
             
 #help command
 bot.remove_command('help')
@@ -224,28 +238,27 @@ async def help(ctx):
 @help.command()
 async def music(ctx):
             embed=discord.Embed()
-#            embed=discord.Embed(title=':musical_note: Music Commands! :musical_note:', description='\n\n`?play` - plays a song\n`?queue` - shows the guilds queue\n`?remove` - removes a song from a guilds queue\n`?skip` - skips a song from the guilds queue\n`?songinfo` - shows info on the song you are playing\n`?stop` - stops the player\n`?fskip` - force skips the song\n`?fremove` - force removes a song from the queue')
+#            embed=discord.Embed(title=':musical_note: Music Commands! :musical_note:', description='\n\n`>play` - plays a song\n`>queue` - shows the guilds queue\n`>remove` - removes a song from a guilds queue\n`>skip` - skips a song from the guilds queue\n`>songinfo` - shows info on the song you are playing\n`>stop` - stops the player\n`>fskip` - force skips the song\n`>fremove` - force removes a song from the queue')
             embed=discord.Embed(title=':musical_note: Music Commands coming soon!:musical_note:')
             await ctx.send(embed=embed)
 
 @help.command()
 async def mod(ctx):
             embed=discord.Embed()
-            embed=discord.Embed(title=':hammer_pick: Moderation Commands :hammer_pick:', description='\n\n`?clear` - This command clears a spesified  ammount of messages from a text channel\n`?mute` - Mutes the spesified player\n`?unmute` - This command unmutes a user.\n`?kick` - Kicks a spesified user\n`?ban` - This command bans a user.\n`?unban` - This command bans a user.\n`?lockdown` - This locksdown a certain channel.\n`?warn` - This warns the user. \n`?removewarn` - This removes a warn.\n`?warns` - This shows warns. ')
+            embed=discord.Embed(title=':hammer_pick: Moderation Commands :hammer_pick:', description='\n\n`>clear` - This command clears a spesified  ammount of messages from a text channel\n`>mute` - Mutes the spesified player\n`>unmute` - This command unmutes a user.\n`>kick` - Kicks a spesified user\n`>ban` - This command bans a user.\n`>unban` - This command bans a user.\n`>lockdown` - This locksdown a certain channel.\n`>warn` - This warns the user. \n`>removewarn` - This removes a warn.\n`>warns` - This shows warns. ')
             await ctx.send(embed=embed)
 
 #fun help command
 @help.command()
 async def fun(ctx):
             embed=discord.Embed(color=discord.Colour.orange())
-#            embed=discord.Embed(title=':zany_face: Fun Commands :zany_face:', description='\n\n`?8ball` - This command you say _8ball then ask your question!\n`?ping` - Lets you play ping pong with the bot!\n`?whisper` - lets you send a dm to someone.')
-            embed=discord.Embed(title=':zany_face: Fun Commands coming soon! :zany_face:')
+            embed=discord.Embed(title=':zany_face: Fun Commands :zany_face:', description='\n\n`>8ball` - This command you say _8ball then ask your question!\n`>ping` - Lets you play ping pong with the bot!\n`>whisper` - lets you send a dm to someone.')
             await ctx.send(embed=embed)
             
 @help.command()
 async def info(ctx):
             embed=discord.Embed(color=discord.Colour.orange())
-            embed=discord.Embed(title=':information_source: info Commands :information_source:', description='\n\n`?whois` - sends the mentioned users info!!!\n`?avatar` - sends the mentioned persons PFP!!!\n`?info` - info about the bot!\n`?server` - info about the server.\n`?channelinfo` - info about the channel.')   
+            embed=discord.Embed(title=':information_source: info Commands :information_source:', description='\n\n`>whois` - sends the mentioned users info!!!\n`>avatar` - sends the mentioned persons PFP!!!\n`>info` - info about the bot!\n`>server` - info about the server.\n`>channelinfo` - info about the channel.')   
             await ctx.send(embed=embed)
             
             
