@@ -127,7 +127,7 @@ async def warn(ctx , member : discord.Member ,* , reason = "No reason Provided")
     json.dump(warns , f)
     await ctx.send(f"{member.mention} was warned for: {reason}")
     
-    embed = discord.Embed(title='You have been warned in The Coding Community', description=f'You received a warning from {member}')
+    embed = discord.Embed(title='You have been warned in The Coding Community', description=f'You received a warning from {ctx.author}')
     embed.add_field(name='Reason:', value=f'{reason}')
     await member.send(embed=embed)
     
