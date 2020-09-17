@@ -23,6 +23,9 @@ class Fun(commands.Cog):
                     converted.append(convert)
             except:
                 pass
+
+        final = ''.join(converted)
+        await ctx.send(final)
             
     @commands.command(aliases=['8ball'])
     async def _8ball(self, ctx, *, question):
