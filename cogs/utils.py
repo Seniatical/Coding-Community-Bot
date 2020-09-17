@@ -1,5 +1,6 @@
 import discord
 import time
+import math
 from discord.ext import commands
 
 class Utility(commands.Cog):
@@ -9,11 +10,8 @@ class Utility(commands.Cog):
 
     @commands.command()
     async def ping(self, ctx):
-        before = time.monotonic()
-        before_ws = int(round(self.bot.latency * 1000, 1))
-        message = await ctx.send(":ping_pong: Pong")
-        ping = (time.monotonic() - before) * 1000
-        await message.edit(content=f":ping_pong: WS: {before_ws}ms  |  REST: {int(ping)}ms")
+        em = discord.Embed(title='Latency', description='Pong {0}'.format(math.trunc(bot.latency * 1000)) + 'ms', color=discord.Color(0x4293f5))
+        await ctx.send(embed=em)
         
 def setup(bot):
     bot.add_cog(Utility(bot))
