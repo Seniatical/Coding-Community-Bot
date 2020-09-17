@@ -8,7 +8,22 @@ class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    #8ball
+    @commands.command(aliases = ['mock','laugh','drunk','drunkify'])
+    async def camel(self,ctx,*,msg):
+        msg = list(msg)
+        converted = []
+        for x in msg:
+            try:
+                qt = random.randint(0,1)
+                if qt == 1:
+                    convert = x.upper()
+                    converted.append(convert)
+                elif qt == 0:
+                    convert = x.lower()
+                    converted.append(convert)
+            except:
+                pass
+            
     @commands.command(aliases=['8ball'])
     async def _8ball(self, ctx, *, question):
         responses = ["It is certain.",
