@@ -3,6 +3,5 @@ asyncio
 youtube_dl
 wikipedia
 praw
-datetime
 requests
 pillow
