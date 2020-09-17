@@ -63,7 +63,7 @@ bot.remove_command('help')
 async def help(ctx):
     if ctx.invoked_subcommand is None:
             embed=discord.Embed()
-            embed=discord.Embed(title='Bot Commands', description='\n\n`>help mod` :hammer_pick: ➣ For moderation commands\n`>help fun` :zany_face: ➣ For Epic fun commands\n`>help info` :information_source: ➣ For infomation commands\n`>help music` ➣ For the music commands')
+            embed=discord.Embed(title='Bot Commands', description='\n\n`>help mod` :hammer_pick: ➣ For moderation commands\n`>help fun` :zany_face: ➣ For Epic fun commands\n`>help info` :information_source: ➣ For infomation commands\n`>help music` ➣ For the music commands\n\n*Use the command `>thanks` to thank your helpful helper!')
             await ctx.send(embed=embed)
 
 @help.command()
@@ -226,5 +226,59 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.BadUnionArgument):
         pass
             
-            
+@bot.command(aliases=['thx', 'THX', 'thankyou'])
+@commands.cooldown(1, 300, commands.BucketType.user)
+async def thank(ctx,member:discord.Member):
+    if member == ctx.author:
+        return False
+    elif ctx.author.bot:
+        return False
+    with open('thank.json','r') as f:
+        thank = json.load(f)
+    if str(member.id) not in thank:
+        thank[str(member.id)] = {}
+        thank[str(member.id)]['tpoin'] = 1
+
+    else:
+        thank[str(member.id)]['tpoin'] += 1
+
+    with open("thank.json","w") as f:
+        json.dump(thank,f)
+    await ctx.send(f'You have thanked {member}')
+
+
+@bot.command(aliases=['lb', 'LB'])
+async def leaderboard(ctx,x=10):
+    with open('thank.json') as f:
+      thank = json.load(f)
+    leaderb = {}
+    total = []
+    for user in thank:
+        name = int(user)
+        
+        total_amt = thank[user]['tpoin']
+
+        leaderb[total_amt] = name
+        total.append(total_amt)
+    
+    total = sorted(total,reverse=True)
+    index = 1
+
+    em = discord.Embed(title=f'Top {x}',description=f'mmyes',color=random.randint(0,0xFFFFF))
+
+    for amt in total:
+        id_ = leaderb[amt]
+        member = bot.get_user(id_)
+        name = member.name
+        id = member.id
+        em.add_field(name=f'{index}. {name}',value=f"Points : `{amt}` | ID: `{id}`",inline=False)
+
+        if index == x:
+            break
+        else:
+            index += 1
+
+    await ctx.send(embed=em)
+ 
+
 bot.run('')
