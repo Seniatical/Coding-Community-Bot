@@ -51,11 +51,6 @@ async def on_ready():
     print('Coding Comunity Bot is ready')
     print('<------------------------------>')
 
-@bot.command()
-async def ping(ctx):
-    embed = discord.Embed(title = 'Pong! {0}'.format(round(bot.latency, 1)))
-    await ctx.send(embed=embed)
-
 
 #help command
 bot.remove_command('help')
@@ -281,4 +276,4 @@ async def leaderboard(ctx,x=10):
     await ctx.send(embed=em)
  
 
-bot.run('')
+bot.run('TOKEN')
