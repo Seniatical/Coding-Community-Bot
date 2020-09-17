@@ -26,6 +26,17 @@ class Fun(commands.Cog):
 
         final = ''.join(converted)
         await ctx.send(final)
+        
+    @commands.command()
+    async def reverse(self,ctx,*,msg):
+        try:
+            msg = list(msg)
+            msg.reverse()
+            print(msg)
+            send = ''.join(msg)
+            await ctx.send(send)
+        except Exception:
+            traceback.print_exc()
             
     @commands.command(aliases=['8ball'])
     async def _8ball(self, ctx, *, question):
