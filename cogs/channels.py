@@ -15,7 +15,7 @@ class Help(commands.Cog, name = 'help'):
         cata = self.bot.get_channel(756195945854795927)
         back = self.bot.get_channel(754710748353265745)
         role = discord.utils.get(message.guild.roles, name = 'Helper')
-        if message.channel.id == 754710893538836480 and message.author.id != 755479510387916871:
+        if message.channel.id == 754710893538836480 and message.author.bot == False387916871:
             if self.bot.hp1 == True:
                 pass
             else:
@@ -37,7 +37,7 @@ class Help(commands.Cog, name = 'help'):
                     await message.channel.send(embed = embed2)
                     self.bot.hp1 = False
                 
-        elif message.channel.id == 754710998769991680 and message.author.id != 755479510387916871:
+        elif message.channel.id == 754710998769991680 and message.author.bot == False:
             if self.bot.hp2 == True:
                 pass
             else:
@@ -59,7 +59,7 @@ class Help(commands.Cog, name = 'help'):
                     await message.channel.send(embed = embed2)
                     self.bot.hp2 = False
                 
-        elif message.channel.id == 754711103665078273 and message.author.id != 7755479510387916871:
+        elif message.channel.id == 754711103665078273 and message.author.bot == False:
             if self.bot.hp3 == True:
                 pass
             else:
