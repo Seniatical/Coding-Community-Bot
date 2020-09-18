@@ -68,6 +68,12 @@ class Help(commands.Cog, name = 'help'):
             embed = discord.Embed(title = f"This channel is now open for help.",
              description = 'If you still need help, wait 15 minutes and then take another open channel.', color = discord.Colour.from_rgb(255,221,170))
             await ctx.send(embed = embed)
+            if ctx.channel.id == 754710893538836480:
+                self.bot.hp1 = False
+            elif ctx.channel.id == 754710998769991680:
+                self.bot.hp2 = False
+            elif ctx.channel.id == 754711103665078273:
+                self.bot.hp3 = False
 
 def setup(bot):
     bot.add_cog(Help(bot))
