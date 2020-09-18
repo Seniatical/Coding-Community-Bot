@@ -8,10 +8,12 @@ class Help(commands.Cog, name = 'help'):
         self.bot = bot
         self.bot.hp1 = False
         self.bot.hp2 = False
+        self.bot.hp3 = False
 
     @commands.Cog.listener()
     async def on_message(self,message):
         cata = self.bot.get_channel(756195945854795927)
+        back = self.bot.get_channel(755862487999447063)
         if message.author.guild_permissions.manage_messages == True:
             pass
         elif message.channel.id == 754710893538836480 and message.author.id != 755479510387916871:
@@ -29,6 +31,10 @@ class Help(commands.Cog, name = 'help'):
                 self.bot.hp1 = True
                 await asyncio.sleep(900)
                 await message.author.remove_roles(cool)
+                await message.channel.edit(catagory = back)
+                embed2 = discord.Embed(title = 'This channel was closed due to inactivity.',
+                description = 'If you still have problems, just claim another help channel.', color = discord.Colour.from_rgb(255,221,170))
+                await message.channel.send(embed = embed2)
         elif message.channel.id == 754710998769991680 and message.author.id != 755479510387916871:
             if self.bot.hp2 == True:
                 pass
@@ -44,8 +50,13 @@ class Help(commands.Cog, name = 'help'):
                 self.bot.hp2 = True
                 await asyncio.sleep(900)
                 await message.author.remove_roles(cool)
+                await message.channel.edit(catagory = back)
+                embed2 = discord.Embed(title = 'This channel was closed due to inactivity.',
+                description = 'If you still have problems, just claim another help channel.', color = discord.Colour.from_rgb(255,221,170))
+                await message.channel.send(embed = embed2)
+                
         elif message.channel.id == 754711103665078273 and message.author.id != 7755479510387916871:
-            if self.bot.hp2 == True:
+            if self.bot.hp3 == True:
                 pass
             else:
                 embed = discord.Embed(title = f'You have just claimed {message.channel.name}.',
@@ -56,9 +67,13 @@ class Help(commands.Cog, name = 'help'):
                 cool = discord.utils.get(message.guild.roles, name = 'Cooldown')
                 await message.author.add_roles(cool)
                 await message.channel.edit(category = cata, sync_permissions = True)
-                self.bot.hp2 = True
+                self.bot.hp3 = True
                 await asyncio.sleep(900)
                 await message.author.remove_roles(cool)
+                await message.channel.edit(catagory = back)
+                embed2 = discord.Embed(title = 'This channel was closed due to inactivity.',
+                description = 'If you still have problems, just claim another help channel.', color = discord.Colour.from_rgb(255,221,170))
+                await message.channel.send(embed = embed2)
 
     @commands.command()
     async def close(self,ctx):
