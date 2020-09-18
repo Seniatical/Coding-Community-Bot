@@ -105,7 +105,7 @@ class Fun(commands.Cog):
 
 
     @commands.command()
-    async def count(ctx, channel: discord.TextChannel = None):
+    async def count(self,ctx, channel: discord.TextChannel = None):
         channel = channel or ctx.channel
         messages = await channel.history(limit=None).flatten()
         count = len(messages)
@@ -113,7 +113,7 @@ class Fun(commands.Cog):
             title="Total Messages",
             colour=0x2859b8,
         description=f"There were {count} messages in {channel.mention}")
-            await ctx.send(embed=embed)
+        await ctx.send(embed=embed)
 
 
 
