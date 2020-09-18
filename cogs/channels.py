@@ -15,9 +15,7 @@ class Help(commands.Cog, name = 'help'):
         cata = self.bot.get_channel(756195945854795927)
         back = self.bot.get_channel(755862487999447063)
         role = discord.utils.get(message.guild.roles, name = 'Helper')
-        if message.author.guild_permissions.manage_messages == True:
-            pass
-        elif message.channel.id == 754710893538836480 and message.author.id != 755479510387916871:
+        if message.channel.id == 754710893538836480 and message.author.id != 755479510387916871:
             if self.bot.hp1 == True:
                 pass
             else:
