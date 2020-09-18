@@ -37,6 +37,7 @@ class Help(commands.Cog, name = 'help'):
                 description = 'If you still have problems, just claim another help channel.', color = discord.Colour.from_rgb(255,221,170))
                 await message.channel.send(embed = embed2)
                 self.bot.hp1 = False
+                
         elif message.channel.id == 754710998769991680 and message.author.id != 755479510387916871:
             if self.bot.hp2 == True:
                 pass
@@ -57,6 +58,7 @@ class Help(commands.Cog, name = 'help'):
                 description = 'If you still have problems, just claim another help channel.', color = discord.Colour.from_rgb(255,221,170))
                 await message.channel.send(embed = embed2)
                 self.bot.hp2 = False
+                
         elif message.channel.id == 754711103665078273 and message.author.id != 7755479510387916871:
             if self.bot.hp3 == True:
                 pass
@@ -77,6 +79,7 @@ class Help(commands.Cog, name = 'help'):
                 description = 'If you still have problems, just claim another help channel.', color = discord.Colour.from_rgb(255,221,170))
                 await message.channel.send(embed = embed2)
                 self.bot.hp3 = False
+                
     @commands.command()
     async def close(self,ctx):
         cata = self.bot.get_channel(754710748353265745)
