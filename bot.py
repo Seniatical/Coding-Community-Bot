@@ -83,7 +83,7 @@ async def fun(ctx):
 @help.command()
 async def info(ctx):
             embed=discord.Embed(color=discord.Colour.orange())
-            embed=discord.Embed(title=':information_source: info Commands :information_source:', description='\n\n`>whois` - sends the mentioned users info!!!\n`>avatar` - sends the mentioned persons PFP!!!\n`>info` - info about the bot!\n`>server` - info about the server.\n`>channelinfo` - info about the channel.')   
+            embed=discord.Embed(title=':information_source: info Commands :information_source:', description='\n\n`>whois` - sends the mentioned users info!!!\n`>avatar` - sends the mentioned persons PFP!!!\n`>info` - info about the bot!\n`>server` - info about the server.\n`>channelinfo` - info about the channel.\n>`suggest` - allow people to vote on your idea.')   
             await ctx.send(embed=embed)
 
 @bot.command(aliases=['whois', 'userinfo'])
