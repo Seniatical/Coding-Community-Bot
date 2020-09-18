@@ -32,7 +32,7 @@ class Help(commands.Cog, name = 'help'):
                 self.bot.hp1 = True
                 await asyncio.sleep(900)
                 await message.author.remove_roles(cool)
-                await message.channel.edit(catagory = back)
+                await message.channel.edit(category = back)
                 embed2 = discord.Embed(title = 'This channel was closed due to inactivity.',
                 description = 'If you still have problems, just claim another help channel.', color = discord.Colour.from_rgb(255,221,170))
                 await message.channel.send(embed = embed2)
@@ -53,7 +53,7 @@ class Help(commands.Cog, name = 'help'):
                 self.bot.hp2 = True
                 await asyncio.sleep(900)
                 await message.author.remove_roles(cool)
-                await message.channel.edit(catagory = back)
+                await message.channel.edit(category = back)
                 embed2 = discord.Embed(title = 'This channel was closed due to inactivity.',
                 description = 'If you still have problems, just claim another help channel.', color = discord.Colour.from_rgb(255,221,170))
                 await message.channel.send(embed = embed2)
@@ -74,7 +74,7 @@ class Help(commands.Cog, name = 'help'):
                 self.bot.hp3 = True
                 await asyncio.sleep(900)
                 await message.author.remove_roles(cool)
-                await message.channel.edit(catagory = back)
+                await message.channel.edit(category = back)
                 embed2 = discord.Embed(title = 'This channel was closed due to inactivity.',
                 description = 'If you still have problems, just claim another help channel.', color = discord.Colour.from_rgb(255,221,170))
                 await message.channel.send(embed = embed2)
