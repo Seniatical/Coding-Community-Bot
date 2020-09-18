@@ -63,7 +63,7 @@ class Help(commands.Cog, name = 'help'):
     @commands.command()
     async def close(self,ctx):
         cata = self.bot.get_channel(754710748353265745)
-        if ctx.channel.id == 755862518567665776 or ctx.channel.id ==  755862540025725049 or ctx.channel.id == 756230480692641852 and ctx.author.id != 748331070927142985:
+        if ctx.channel.id == 755862518567665776 or ctx.channel.id == 755862540025725049 or ctx.channel.id == 756230480692641852 and ctx.author.id != 748331070927142985:
             await ctx.channel.edit(category = cata, sync_permissions = True)
             embed = discord.Embed(title = f"This channel is now open for help.",
              description = 'If you still need help, wait 15 minutes and then take another open channel.', color = discord.Colour.from_rgb(255,221,170))
