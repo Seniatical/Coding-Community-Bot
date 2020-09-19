@@ -74,7 +74,10 @@ async def user(ctx, member: discord.Member):
   embed.set_footer(icon_url=member.avatar_url, text=f'Requested By: {ctx.author.name}')
   await ctx.send(embed=embed)
 
+
+    
 @bot.command()
+@commands.has_permissions(manage_guild=True)
 async def warn(ctx , member : discord.Member ,* , reason = "No reason Provided"):
   with open('warnings.json','r') as f:
     warns = json.load(f)
@@ -90,11 +93,12 @@ async def warn(ctx , member : discord.Member ,* , reason = "No reason Provided")
     json.dump(warns , f)
     await ctx.send(f"{member.mention} was warned for: {reason}")
     
-    embed = discord.Embed(title='You have been warned in The Coding Community', description=f'You received a warning from {ctx.author}')
+    embed = discord.Embed(title='You have been warned in The Coding Community', description=f'You received a warning from {member}')
     embed.add_field(name='Reason:', value=f'{reason}')
     await member.send(embed=embed)
     
 @bot.command()
+@commands.has_permissions(manage_guild=True)
 async def removewarn(ctx, member: discord.Member, num: int, *, reason='No reason provided.'):
   with open('warnings.json' , 'r') as f:
     warns = json.load(f)
@@ -108,7 +112,8 @@ async def removewarn(ctx, member: discord.Member, num: int, *, reason='No reason
     await member.send(embed=embed)
 
         
-@bot.command()
+@client.command()
+@commands.has_permissions(manage_guild=True)
 async def warns(ctx , member : discord.Member):
   with open('warnings.json', 'r') as f:
     warns = json.load(f)
@@ -118,7 +123,6 @@ async def warns(ctx , member : discord.Member):
     warnings.add_field(name = f"Warn {num}" , value = warn)
     num += 1
   await ctx.send(embed = warnings)
-
 
 @bot.command()
 async def verify(ctx):
