@@ -1,6 +1,5 @@
-# Coding-Community-Bot!
-This is a bot coded for The Coding Community (https://discord.gg/G7hTWt4) a coding server in Discord!
-# commands to add
+
+### commands to add
 
 ##### automod - bad words, bad links, bad files ect
 ##### welcome message - general -  just show how long ago their acc was made
