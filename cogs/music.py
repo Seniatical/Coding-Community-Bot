@@ -8,7 +8,7 @@ from discord.ext import commands
 from discord.utils import get
 from pathlib import Path
 
-from music import Queue, Song, SongRequestError
+from musicsettings import Queue, Song, SongRequestError
 
 SONGS_PER_PAGE = 10
 
