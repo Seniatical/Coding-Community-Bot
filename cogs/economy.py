@@ -293,6 +293,7 @@ class Economy(commands.Cog):
             await ctx.send("You Lost.")
 
     @commands.command()
+    async def rob(self,ctx, member:discord.Member):
         await self.open_account(ctx.author)
         await self.open_account(member)
 
