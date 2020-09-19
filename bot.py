@@ -13,6 +13,7 @@ from PIL import ImageDraw
 from PIL import ImageFont
 
 bot = commands.Bot(command_prefix = '>')
+bot.remove_command('help')
 
 
 
