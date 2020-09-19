@@ -8,14 +8,10 @@ mainshop = [{"name":"Watch","price":100,"description":"Time"},
             {"name":"Laptop","price":1000,"description":"Work"},
             {"name":"PC","price":10000,"description":"Gaming"}]
 
-class Economy(commands.Cog, name = 'ecom'):
+class Economy(commands.Cog):
 
-    def __init__ (self,bot):
-        self.bot = bot
-
-    @commands.Cog.listener()
-    async def on_ready(self):
-        print('Economy Module Loaded')
+    def __init__(self, client):
+        self.client = client
 
     @commands.command()
     async def helpeconomy(self,ctx):
