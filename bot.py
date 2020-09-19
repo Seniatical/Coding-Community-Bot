@@ -18,21 +18,21 @@ bot.remove_command('help')
 
 
 @bot.command()
-@commands.has_permissions(administrator = True)
+@commands.is_owner()
 async def enable(ctx, extension):
     bot.load_extension(f'cogs.{extension}')
     embed = discord.Embed(title = ':white_check_mark: **Successfully Enabled ' + extension + '.**')
     await ctx.send(embed = embed)
 
 @bot.command()
-@commands.has_permissions(administrator = True)
+@commands.is_owner()
 async def disable(ctx,extension):
     bot.unload_extension(f'cogs.{extension}')
     embed = discord.Embed(title = ':white_check_mark: **Successfully disabled ' + extension + '.**')
     await ctx.send(embed = embed)
 
 @bot.command()
-@commands.has_permissions(administrator = True)
+@commands.is_owner()
 async def reload(ctx,extension):
     bot.unload_extension(f'cogs.{extension}')
     bot.load_extension(f'cogs.{extension}')
@@ -179,24 +179,19 @@ async def verify(ctx):
             traceback.print_exc()
 
 @bot.event
-async def on_command_error(ctx, error):
-    embed = discord.Embed(title='',color=discord.Color.red())
-    if isinstance(error, commands.BadArgument):
-        pass
-    if isinstance(error, commands.MissingPermissions):
-        embed.add_field(name='Invalid Permissions', value=f'You dont have {error.missing_perms} permissions')
-        await ctx.send(embed=embed)
-    if isinstance(error, commands.CommandNotFound):
-        pass
-    if isinstance(error, commands.CommandOnCooldown):
-        if error.retry_after < 60:
-            f=round(error.retry_after) / 60
-            embed.add_field(name=f'Your on cooldown!', value=f'Stop trying. Wait {round(error.retry_after, 0)} seconds and retry again.')
-            await ctx.send(embed=embed)
-    if isinstance(error, commands.ArgumentParsingError):
-        pass
-    if isinstance(error, commands.BadUnionArgument):
-        pass
+async def on_command_error(ctx,error):
+  if isinstance(error,commands.CheckFailure):
+    embed = discord.Embed(title = ':x:You do not have permission to use this command.', color = discord.Colour.red())
+    await ctx.send(embed = embed)
+  elif isinstance(error,commands.MissingRequiredArgument):
+    embed = discord.Embed(title = ':x:You are missing the required arguements. Please check if your command requires an addition arguement.', color = discord.Colour.red())
+    await ctx.send(embed = embed)
+  elif isinstance(error, commands.CommandNotFound):
+    pass
+  elif isinstance(error, commands.CommandOnCooldown):
+    embed = discord.Embed(title = ':x:Woah too fast there! This Command is on Cooldown!', color = discord.Colour.red())
+    await ctx.send(embed = embed)
+
             
 @bot.command(aliases=['thx', 'THX', 'thankyou'])
 @commands.cooldown(1, 300, commands.BucketType.user)
@@ -219,8 +214,8 @@ async def thank(ctx,member:discord.Member):
     await ctx.send(f'You have thanked {member}')
 
 
-@bot.command(aliases=['lb', 'LB'])
-async def leaderboard(ctx,x=10):
+@bot.command(aliases=['thxlb'])
+async def thxleaderboard(ctx,x=10):
     with open('thank.json') as f:
       thank = json.load(f)
     leaderb = {}
@@ -252,5 +247,176 @@ async def leaderboard(ctx,x=10):
 
     await ctx.send(embed=em)
  
+@client.group()
+async def work(ctx):
+    if ctx.invoked_subcommand is None:
+            embed=discord.Embed(title='Jobs!', description='*Jobs you can work as*\n*usage* `?work [job name here]`\n\ncoder\nhitman\nfoodtester\ncook\nmcdonalds\nbinman\nbabysitter\footballer\nyoutuber', color=discord.Colour.orange())
+            await ctx.send(embed=embed)
+
+@work.command()
+@commands.cooldown(1, 5, commands.BucketType.user)
+async def coder(ctx):
+    await open_account(ctx.author)
+
+    users = await get_bank_data()
+
+    user = ctx.author
+
+    earnings = random.randrange(50)
+    em = discord.Embed(title = f'You worked as a Coder and got {earnings} coins!',colour = discord.Colour.orange())
+    await ctx.send(embed = em)
+
+    users[str(user.id)]['wallet'] += earnings
+
+    with open('mainbank.json','w') as f:
+        json.dump(users,f)
+
+@work.command()
+@commands.cooldown(1, 5, commands.BucketType.user)
+async def hitman(ctx):
+    await open_account(ctx.author)
+
+    users = await get_bank_data()
+
+    user = ctx.author
+
+    earnings = random.randrange(50)
+    em = discord.Embed(title = f'You worked as a Hitman and got {earnings} coins!',colour = discord.Colour.orange())
+    await ctx.send(embed = em)
+
+    users[str(user.id)]['wallet'] += earnings
+
+    with open('mainbank.json','w') as f:
+        json.dump(users,f)
+
+@work.command()
+@commands.cooldown(1, 5, commands.BucketType.user)
+async def foodtester(ctx):
+    await open_account(ctx.author)
+
+    users = await get_bank_data()
+
+    user = ctx.author
+
+    earnings = random.randrange(50)
+    em = discord.Embed(title = f'You worked as a Food Tester and got {earnings} coins!',colour = discord.Colour.orange())
+    await ctx.send(embed = em)
+
+    users[str(user.id)]['wallet'] += earnings
+
+    with open('mainbank.json','w') as f:
+        json.dump(users,f)
+
+@work.command()
+@commands.cooldown(1, 5, commands.BucketType.user)
+async def cook(ctx):
+    await open_account(ctx.author)
+
+    users = await get_bank_data()
+
+    user = ctx.author
+
+    earnings = random.randrange(50)
+    em = discord.Embed(title = f'You worked as a cook and got {earnings} coins!',colour = discord.Colour.orange())
+    await ctx.send(embed = em)
+
+    users[str(user.id)]['wallet'] += earnings
+
+    with open('mainbank.json','w') as f:
+        json.dump(users,f)
+
+@work.command()
+@commands.cooldown(1, 5, commands.BucketType.user)
+async def mcdonalds(ctx):
+    await open_account(ctx.author)
+
+    users = await get_bank_data()
+
+    user = ctx.author
+
+    earnings = random.randrange(43)
+    em = discord.Embed(title = f'You worked at MC Donalds and got {earnings} coins!',colour = discord.Colour.orange())
+    await ctx.send(embed = em)
+
+    users[str(user.id)]['wallet'] += earnings
+
+    with open('mainbank.json','w') as f:
+        json.dump(users,f)
+
+@work.command()
+@commands.cooldown(1, 5, commands.BucketType.user)
+async def binman(ctx):
+    await open_account(ctx.author)
+
+    users = await get_bank_data()
+
+    user = ctx.author
+
+    earnings = random.randrange(25)
+    em = discord.Embed(title = f'You worked as a BinMan and got {earnings} coins!',colour = discord.Colour.orange())
+    await ctx.send(embed = em)
+
+    users[str(user.id)]['wallet'] += earnings
+
+    with open('mainbank.json','w') as f:
+        json.dump(users,f)
+
+@work.command()
+@commands.cooldown(1, 5, commands.BucketType.user)
+async def babysitter(ctx):
+    await open_account(ctx.author)
+
+    users = await get_bank_data()
+
+    user = ctx.author
+
+    earnings = random.randrange(40)
+    em = discord.Embed(title = f'You worked as a BabySitter and got {earnings} coins!',colour = discord.Colour.orange())
+    await ctx.send(embed = em)
+
+    users[str(user.id)]['wallet'] += earnings
+
+    with open('mainbank.json','w') as f:
+        json.dump(users,f)
+
+@work.command()
+@commands.cooldown(1, 5, commands.BucketType.user)
+async def footballer(ctx):
+    await open_account(ctx.author)
+
+    users = await get_bank_data()
+
+    user = ctx.author
+
+    earnings = random.randrange(50)
+    em = discord.Embed(title = f'You worked as a FootBaller and got {earnings} coins!',colour = discord.Colour.orange())
+    await ctx.send(embed = em)
+
+    users[str(user.id)]['wallet'] += earnings
+
+    with open('mainbank.json','w') as f:
+        json.dump(users,f)
+
+
+
+@work.command()
+@commands.cooldown(1, 5, commands.BucketType.user)
+async def youtuber(ctx):
+    await open_account(ctx.author)
+
+    users = await get_bank_data()
+
+    user = ctx.author
+
+    earnings = random.randrange(50)
+    em = discord.Embed(title = f'You worked as a YouTuber and got {earnings} coins!',colour = discord.Colour.orange())
+    await ctx.send(embed = em)
+
+    users[str(user.id)]['wallet'] += earnings
+
+    with open('mainbank.json','w') as f:
+        json.dump(users,f)
+
+
 
 bot.run('TOKEN')
