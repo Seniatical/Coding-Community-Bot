@@ -2,7 +2,7 @@ import discord
 import asyncio
 from discord.ext import commands
 
-class Help(commands.Cog, name = 'help'):
+class Channels(commands.Cog, name = 'channels'):
 
     def __init__ (self,bot):
         self.bot = bot
@@ -99,4 +99,4 @@ class Help(commands.Cog, name = 'help'):
                 self.bot.hp3 = False
 
 def setup(bot):
-    bot.add_cog(Help(bot))
+    bot.add_cog(Channels(bot))
