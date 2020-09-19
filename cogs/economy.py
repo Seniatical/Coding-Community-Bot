@@ -297,7 +297,6 @@ class Economy(commands.Cog, name = 'ecom'):
             await ctx.send("You Lost.")
 
     @commands.command()
-    async def rob(self,ctx,member: discord.Member):
         await self.open_account(ctx.author)
         await self.open_account(member)
 
@@ -320,13 +319,12 @@ class Economy(commands.Cog, name = 'ecom'):
         user = ctx.author
         earnings = random.randrange(101)
 
-        await ctx.send(f"Someone gave you {earnings} coins!")
 
         users[str(user.id)]["wallet"] += earnings
 
         with open("mainbank.json","w") as f:
             json.dump(users,f)
-
+#work cmd in main file
 
 def setup(bot):
     bot.add_cog(Economy(bot))
