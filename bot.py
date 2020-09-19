@@ -112,7 +112,7 @@ async def removewarn(ctx, member: discord.Member, num: int, *, reason='No reason
     await member.send(embed=embed)
 
         
-@client.command()
+@bot.command()
 @commands.has_permissions(manage_guild=True)
 async def warns(ctx , member : discord.Member):
   with open('warnings.json', 'r') as f:
