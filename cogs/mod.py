@@ -8,6 +8,49 @@ class Mod(commands.Cog):
         self.bot = bot
 
 
+    @commands.command()
+    @commands.has_permissions(manage_channels = True)
+    async def lock(self,ctx, amount = 1):
+        await ctx.channel.purge(limit = amount)
+        await ctx.message.channel.set_permissions(ctx.guild.default_role, send_messages=False)
+        embed = discord.Embed(title = 'This channel has been locked by: ' + str(ctx.message.author))
+        await ctx.send(embed=embed)
+
+    @commands.command()
+    @commands.has_permissions(manage_channels = True)
+    async def unlock(self,ctx, amount = 1):
+        await ctx.channel.purge(limit = amount)
+        await ctx.message.channel.set_permissions(ctx.guild.default_role, send_messages=True)
+        embed = discord.Embed(title = 'This channel has been unlocked by: ' + str(ctx.message.author))
+        await ctx.send(embed=embed)
+
+     @commands.command()
+    async def slowmode(self,ctx,time:int):
+        try:
+            if time == 0:
+                embed = discord.Embed(title = 'Slowmode turned off')
+                await ctx.send(embed = embed)
+                await ctx.channel.edit(slowmode_delay = 0)
+            elif time > 21600:
+                embed = discord.Embed(title = 'You cannot have a slowmode above 6hrs.')
+                await ctx.send(embed = embed)
+            else:
+                await ctx.channel.edit(slowmode_delay = time)
+                embed = discord.Embed(title = f'Slowmode set to {time} seconds.')
+                await ctx.send(embed = embed)
+        except Exception:
+            traceback.print_exc()
+            
+            
+            
+            
+            
+            
+            
+        
+        
+        
+
     # this is the clear command
     @commands.command()
     @commands.has_permissions(manage_messages=True)
