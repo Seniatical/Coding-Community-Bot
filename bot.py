@@ -15,7 +15,15 @@ from PIL import ImageFont
 bot = commands.Bot(command_prefix = '>')
 bot.remove_command('help')
 
-
+@bot.event
+async def on_member_join(member):
+    userAvatarUrl = member.avatar_url   
+    channel = bot.get_channel(743817386792058971)
+    embed=discord.Embed(title=f'Hello welcome to the server {member}')
+    embed.add_field(name='Account created at:', value=member.created_at.strftime('%a, %#d %B %Y, %I:%M %p UTC'))
+    embed.add_field(name='Joined at:', value=member.joined_at.strftime('%a, %#d %B %Y, %I:%M %p UTC'))
+    embed.set_thumbnail(url=userAvatarUrl)    
+    await channel.send(embed = embed)
 
 @bot.command()
 @commands.is_owner()
