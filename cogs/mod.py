@@ -15,6 +15,12 @@ class Mod(commands.Cog):
         await ctx.message.channel.set_permissions(ctx.guild.default_role, send_messages=False)
         embed = discord.Embed(title = 'This channel has been locked by: ' + str(ctx.message.author))
         await ctx.send(embed=embed)
+        
+    @commands.command()
+    async def nick(self,ctx,member:discord.Member,name):
+        await member.edit(nick = name)
+        embed = discord.Embed(title = 'Nick Name Successfully Changed!')
+        await ctx.send(embed = embed)
 
     @commands.command()
     @commands.has_permissions(manage_channels = True)
