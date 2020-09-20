@@ -9,7 +9,12 @@ class Channels(commands.Cog, name = 'channels'):
         self.bot.hp1 = False
         self.bot.hp2 = False
         self.bot.hp3 = False
+        self.bot.hp1timer = 0
+        self.bot.hp2timer = 0
+        self.bot.hp3timer = 0
 
+        
+        
     @commands.Cog.listener()
     async def on_message(self,message):
         cata = self.bot.get_channel(756195945854795927)
@@ -19,7 +24,7 @@ class Channels(commands.Cog, name = 'channels'):
             pass
         elif message.channel.id == 754710893538836480 and message.author.bot == False:
             if self.bot.hp1 == True:
-                pass
+               self.bot.hp1timer += 10
             else:
                 embed = discord.Embed(title = f'You have just claimed {message.channel.name}.',
                  description = 'You would not be able to claim any other help channels for 15 minutes.', color = discord.Colour.from_rgb(255,221,170))
@@ -32,6 +37,7 @@ class Channels(commands.Cog, name = 'channels'):
                 self.bot.hp1 = True
                 await asyncio.sleep(900)
                 await message.author.remove_roles(cool)
+                await asyncio.sleep(self.bot.hp1timer)
                 if self.bot.hp1 == True:
                     await message.channel.edit(category = back)
                     embed2 = discord.Embed(title = 'This channel was closed due to inactivity.',
@@ -41,7 +47,7 @@ class Channels(commands.Cog, name = 'channels'):
                 
         elif message.channel.id == 754710998769991680 and message.author.bot == False:
             if self.bot.hp2 == True:
-                pass
+               self.bot.hp2timer += 10
             else:
                 embed = discord.Embed(title = f'You have just claimed {message.channel.name}.',
                  description = 'You would not be able to claim any other help channels for 15 minutes.', color = discord.Colour.from_rgb(255,221,170))
@@ -53,8 +59,9 @@ class Channels(commands.Cog, name = 'channels'):
                 await message.channel.edit(category = cata, sync_permissions = True)
                 self.bot.hp2 = True
                 await asyncio.sleep(900)
+                await message.author.remove_roles(cool)
+                await asyncio.sleep(self.bot.hp2timer)
                 if self.bot.hp2 == True:
-                    await message.author.remove_roles(cool)
                     await message.channel.edit(category = back)
                     embed2 = discord.Embed(title = 'This channel was closed due to inactivity.',
                     description = 'If you still have problems, just claim another help channel.', color = discord.Colour.from_rgb(255,221,170))
@@ -63,7 +70,7 @@ class Channels(commands.Cog, name = 'channels'):
                 
         elif message.channel.id == 754711103665078273 and message.author.bot == False:
             if self.bot.hp3 == True:
-                pass
+               self.bot.hp3timer += 10
             else:
                 embed = discord.Embed(title = f'You have just claimed {message.channel.name}.',
                  description = 'You would not be able to claim any other help channels for 15 minutes.', color = discord.Colour.from_rgb(255,221,170))
@@ -76,6 +83,7 @@ class Channels(commands.Cog, name = 'channels'):
                 self.bot.hp3 = True
                 await asyncio.sleep(900)
                 await message.author.remove_roles(cool)
+                await asyncio.sleep(self.bot.hp3timer)
                 if self.bot.hp3 == True:
                     await message.channel.edit(category = back)
                     embed2 = discord.Embed(title = 'This channel was closed due to inactivity.',
