@@ -204,7 +204,7 @@ async def verify(ctx):
                 def check(x):
                     return x.author == ctx.author
                 print('made it 2')
-                verif = await bot_two.wait_for('message',check = check, timeout = 300)
+                verif = await bot.wait_for('message',check = check, timeout = 300)
                 print(verif)
                 if verif.content == code:
                     await member.send('You passed the verification process!')
