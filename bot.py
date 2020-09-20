@@ -17,7 +17,7 @@ bot.remove_command('help')
 
 @bot.event
 async def on_member_join(member):
-    acceptable_nick = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','1','2','3','4','5','6','7','8','9','0']
+    acceptable_nick = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','1','2','3','4','5','6','7','8','9','0','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
     final = []
     for x in range(5):
         keys = random.choice(acceptable_nick)
@@ -27,6 +27,10 @@ async def on_member_join(member):
         if i in acceptable_nick:
             return 
     await member.edit(nick = f"Moderated Nickname {final2}")
+    embed = discord.Embed(title = 'Untaggable Username\n',
+     description = 'We automatically detected that your username includes no normal english characters or symbols.\nAs a result your nickname was automatically set. You may ask any staff member to change your nickname for you.',
+     color = discord.Colour.red())
+    await member.send(embed = embed)
     userAvatarUrl = member.avatar_url   
     channel = bot.get_channel(743817386792058971)
     embed=discord.Embed(title=f'Hello welcome to the server {member}')
@@ -34,6 +38,19 @@ async def on_member_join(member):
     embed.add_field(name='Joined at:', value=member.joined_at.strftime('%a, %#d %B %Y, %I:%M %p UTC'))
     embed.set_thumbnail(url=userAvatarUrl)    
     await channel.send(embed = embed)
+    
+@bot.event
+async def on_member_update(before,after):
+    acceptable_nick = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','1','2','3','4','5','6','7','8','9','0','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+    final = []
+    for x in range(5):
+        keys = random.choice(acceptable_nick)
+        final.append(keys)
+    final2 = ''.join(final)
+    for i in after.nick:
+        if i in acceptable_nick:
+            return 
+    await after.edit(nick = f"Moderated Nickname {final2}")
 
 @bot.command()
 @commands.is_owner()
