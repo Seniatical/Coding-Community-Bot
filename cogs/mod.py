@@ -190,33 +190,33 @@ class Mod(commands.Cog):
                     muted = await ctx.guild.create_role(name = "Muted")
                     await ctx.message.channel.set_permissions(ctx.guild.get_role(muted.id), send_messages = False)
                     
-       @commands.command()
-       async def tempban(self,ctx,member:discord.Member,time,*,reason = 'No Reason Provided'):
-           with open('guild.json','r') as f:
-               channels = json.load(f)
-           indicator = time[-1]
-           if indicator == "m" or indicator == "s" or indicator == 'h' or indicator == 'd':
-               pass
-           else:
-               await ctx.send('Incorrect Time Format.')
-           embed = discord.Embed(title = f'{member} has been temp banned for {time}.')
-           await ctx.send(embed = embed)
-           await member.ban(reason = reason)
-           chanid = channels[str(ctx.guild.id)]['admin'][0]['adid']
-           channel = self.bot.get_channel(chanid)
-           embed = discord.Embed(title = 'Member Tempbanned!', color = discord.Colour.red())
-           embed.add_field(name = f'{member} was tempbanned({time}) from {ctx.guild.name} for: ',value = f'{reason}')
-           await channel.send(embed = embed)
-           time = time[:-1]
-           if indicator == 'm':
-               await asyncio.sleep(int(time) * 60)
-           elif indicator == 'h':
-               await asyncio.sleep(int(time) * 3600)
-           elif indicator == 's':
-               await asyncio.sleep(int(time))
-           elif indicator == 'd':
-               await asyncio.sleep(int(time) * 86400)
-           await member.unban(reason = 'Timer has expired.')
+      @commands.command()
+      async def tempban(self,ctx,member:discord.Member,time,*,reason = 'No Reason Provided'):
+          with open('guild.json','r') as f:
+              channels = json.load(f)
+          indicator = time[-1]
+          if indicator == "m" or indicator == "s" or indicator == 'h' or indicator == 'd':
+              pass
+          else:
+              await ctx.send('Incorrect Time Format.')
+          embed = discord.Embed(title = f'{member} has been temp banned for {time}.')
+          await ctx.send(embed = embed)
+          await member.ban(reason = reason)
+          chanid = channels[str(ctx.guild.id)]['admin'][0]['adid']
+          channel = self.bot.get_channel(chanid)
+          embed = discord.Embed(title = 'Member Tempbanned!', color = discord.Colour.red())
+          embed.add_field(name = f'{member} was tempbanned({time}) from {ctx.guild.name} for: ',value = f'{reason}')
+          await channel.send(embed = embed)
+          time = time[:-1]
+          if indicator == 'm':
+              await asyncio.sleep(int(time) * 60)
+          elif indicator == 'h':
+              await asyncio.sleep(int(time) * 3600)
+          elif indicator == 's':
+              await asyncio.sleep(int(time))
+          elif indicator == 'd':
+              await asyncio.sleep(int(time) * 86400)
+          await member.unban(reason = 'Timer has expired.')
 
     #mute command
     @commands.command()
