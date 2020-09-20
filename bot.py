@@ -17,6 +17,16 @@ bot.remove_command('help')
 
 @bot.event
 async def on_member_join(member):
+    acceptable_nick = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','1','2','3','4','5','6','7','8','9','0']
+    final = []
+    for x in range(5):
+        keys = random.choice(acceptable_nick)
+        final.append(keys)
+    final2 = ''.join(final)
+    for i in member.name:
+        if i in acceptable_nick:
+            return 
+    await member.edit(nick = f"Moderated Nickname {final2}")
     userAvatarUrl = member.avatar_url   
     channel = bot.get_channel(743817386792058971)
     embed=discord.Embed(title=f'Hello welcome to the server {member}')
