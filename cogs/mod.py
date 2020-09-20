@@ -1,6 +1,16 @@
 import discord
+import json
+import os
+import re
+import datetime
 import traceback
+import random
+import asyncio
 from discord.ext import commands
+from pip._vendor import requests
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
 
 class Mod(commands.Cog):
 
