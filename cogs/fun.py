@@ -28,6 +28,11 @@ class Fun(commands.Cog):
         await ctx.send(final)
         
     @commands.command()
+    async def say(self,ctx,*,msg):
+        await ctx.channel.purge(amount = 1)
+        await ctx.send(msg)
+        
+    @commands.command()
     async def reverse(self,ctx,*,msg):
         try:
             msg = list(msg)
