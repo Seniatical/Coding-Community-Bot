@@ -8,5 +8,3 @@
 ##### nickname change cmd - done by capslock
 
 ##### token
-
-###### NzU1NDc5NTEwMzg3OTE2ODcx.X2D5Hw.ZdFR1k32s6MGWwO8QU0hReh67qU
