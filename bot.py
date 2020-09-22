@@ -265,7 +265,7 @@ async def thxleaderboard(ctx,x=10):
     total = sorted(total,reverse=True)
     index = 1
 
-    em = discord.Embed(title=f'Top {x}',description=f'mmyes',color=random.randint(0,0xFFFFF))
+    em = discord.Embed(title=f'Top {x}', color=random.randint(0,0xFFFFF))
 
     for amt in total:
         check = []
@@ -277,8 +277,9 @@ async def thxleaderboard(ctx,x=10):
           pass
         else:
           em.add_field(name=f'{index}. {name}',value=f"Points : `{amt}` | ID: `{id}`",inline=False)
-          check.append(id) 
-    await ctx.send(embed=em) 
+          check.append(id)
+          index += 1
+    await ctx.send(embed=em)
 
 
 bot.run('TOKEN')
