@@ -281,5 +281,17 @@ async def thxleaderboard(ctx,x=10):
           index += 1
     await ctx.send(embed=em)
 
+@bot.command()
+async def checkthanks(ctx, member : discord.Member):
+  with open('thank.json') as f:
+    thank = json.load(f)
+  total_thanks = thank[str(member.id)]['tpoin']
+  embed = discord.Embed(
+    title = "{}'s total thanks!".format(member),
+    colour = discord.Colour.red(),
+    description = "The user currently has {} thanks.".format(total_thanks))
+  embed.set_footer(text=f'User ID: {member.id}')
+  await ctx.send(embed=embed)
+
 
 bot.run('TOKEN')
