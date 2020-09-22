@@ -229,7 +229,6 @@ async def on_command_error(ctx,error):
 
             
 @bot.command(aliases=['thx', 'THX', 'thankyou'])
-@commands.cooldown(1, 300, commands.BucketType.user)
 async def thank(ctx,member:discord.Member):
     if member == ctx.author:
         return False
@@ -279,6 +278,7 @@ async def thxleaderboard(ctx,x=10):
         else:
           em.add_field(name=f'{index}. {name}',value=f"Points : `{amt}` | ID: `{id}`",inline=False)
           check.append(id) 
+    await ctx.send(embed=em) 
 
 
 bot.run('TOKEN')
