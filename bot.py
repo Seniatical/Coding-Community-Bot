@@ -269,19 +269,16 @@ async def thxleaderboard(ctx,x=10):
     em = discord.Embed(title=f'Top {x}',description=f'mmyes',color=random.randint(0,0xFFFFF))
 
     for amt in total:
+        check = []
         id_ = leaderb[amt]
         member = bot.get_user(id_)
         name = member.name
         id = member.id
-        em.add_field(name=f'{index}. {name}',value=f"Points : `{amt}` | ID: `{id}`",inline=False)
-
-        if index == x:
-            break
+        if id in check:
+          pass
         else:
-            index += 1
-
-    await ctx.send(embed=em)
- 
+          em.add_field(name=f'{index}. {name}',value=f"Points : `{amt}` | ID: `{id}`",inline=False)
+          check.append(id) 
 
 
 bot.run('TOKEN')
