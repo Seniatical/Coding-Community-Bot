@@ -106,7 +106,7 @@ class Channels(commands.Cog, name = 'channels'):
             elif ctx.channel.id == 754711103665078273:
                 self.bot.hp3 = False
                 
-     @commands.command()
+    @commands.command()
     async def eval(self,ctx,*,code:str):
         try:
             if code.startswith('```py') and code.endswith('```'):
