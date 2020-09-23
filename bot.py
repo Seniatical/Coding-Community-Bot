@@ -6,7 +6,7 @@ import datetime
 import traceback
 import random
 import asyncio
-from discord.ext import commands
+from discord.ext import commands, tasks
 from pip._vendor import requests
 from PIL import Image
 from PIL import ImageDraw
@@ -81,7 +81,6 @@ for filename in os.listdir('./cogs'):
 from itertools import cycle
 
 
-client = commands.Bot(command_prefix = get_prefix)
 status = cycle(['in 10000+ servers', 'with fire', 'with beer','the ban hammer'])
 
 @tasks.loop(seconds=30)
@@ -95,12 +94,6 @@ async def on_ready():
     print('Coding Comunity Bot is ready')
     print('<------------------------------>')
 
-            
-@help.command()
-async def info(ctx):
-            embed=discord.Embed(color=discord.Colour.orange())
-            embed=discord.Embed(title=':information_source: info Commands :information_source:', description='\n\n`>whois` - sends the mentioned users info!!!\n`>avatar` - sends the mentioned persons PFP!!!\n`>info` - info about the bot!\n`>server` - info about the server.\n`>channelinfo` - info about the channel.\n>`suggest` - allow people to vote on your idea.')   
-            await ctx.send(embed=embed)
 
 @bot.command(aliases=['whois', 'userinfo'])
 async def user(ctx, member: discord.Member):
