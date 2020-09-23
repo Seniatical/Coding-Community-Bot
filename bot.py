@@ -78,11 +78,19 @@ async def reload(ctx,extension):
 for filename in os.listdir('./cogs'):
     if filename.endswith(".py"):
         bot.load_extension(f'cogs.{filename[:-3]}')
+from itertools import cycle
 
+
+client = commands.Bot(command_prefix = get_prefix)
+status = cycle(['in 10000+ servers', 'with fire', 'with beer','the ban hammer'])
+
+@tasks.loop(seconds=30)
+async def change_status():
+    await client.change_presence(activity=discord.Game(next(status)))
 
 @bot.event
 async def on_ready():
-    await bot.change_presence(activity=discord.Activity(type = discord.ActivityType.watching, name = " General Chat!"))
+    change_status.start()
     print('<------------------------------>')
     print('Coding Comunity Bot is ready')
     print('<------------------------------>')
