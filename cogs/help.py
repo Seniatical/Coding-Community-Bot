@@ -33,7 +33,7 @@ class Help(commands.Cog):
    
    @commands.command()
    async def helputils(self, ctx)
-              embed=discord.Embed(title='utility commands!', description='\n\n`>checkthanks' - checks a users thanks!\n`>thxlb` - lets you see the thanks leaderboard\n'>thx' - lets you thank a user')
+              embed=discord.Embed(title='utility commands!', description='\n\n`>checkthanks' - checks a users thanks!\n`>thxlb` - lets you see the thanks leaderboard\n>thx - lets you thank a user')
               await ctx.send(embed=embed)
    
     
