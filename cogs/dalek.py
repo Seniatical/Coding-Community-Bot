@@ -1,4 +1,5 @@
 import discord
+import asyncio
 from discord.ext import commands
 
 class Dalek(commands.Cog):
@@ -7,7 +8,7 @@ class Dalek(commands.Cog):
         self.bot = bot
         
     @commands.command()
-    async def beer(self, ctx, user: discord.Member = None, , reason: commands.clean_content = ""):
+    async def beer(self, ctx, user: discord.Member = None, reason: commands.clean_content = ""):
 
         if not user or user.id == ctx.author.id:
             return await ctx.send(f"{ctx.author.name}: paaaarty!:tada::beer:")
