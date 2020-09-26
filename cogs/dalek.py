@@ -1,5 +1,6 @@
 import discord
 import asyncio
+import time
 from discord.ext import commands
 
 class Dalek(commands.Cog):
@@ -22,13 +23,13 @@ class Dalek(commands.Cog):
         msg = await ctx.send(beer_offer)
 
         def reaction_check(m):
-            if m.message_id == msg.id and m.user_id == user.id and str(m.emoji) == ":beers:":
+            if m.message_id == msg.id and m.user_id == user.id and str(m.emoji) == "🍻":
                 return True
             return False
 
         try:
-            await msg.add_reaction(":beers:")
-            await self.bot.wait_for('raw_reaction_add', timeout=30.0, check=reaction_check)
+            await msg.add_reaction("🍻")
+            await self.bot.wait_for('reaction_add', timeout=30.0, check=reaction_check)
             await msg.edit(content=f"{user.name} and {ctx.author.name} are enjoying a lovely beer together :beers:")
         except asyncio.TimeoutError:
             await msg.delete()
