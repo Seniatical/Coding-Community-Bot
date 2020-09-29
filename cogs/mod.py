@@ -228,7 +228,7 @@ class Mod(commands.Cog):
 
             
     @commands.command()
-    @commands.has_permissions(manage_guild=True)
+    @commands.has_permissions(manage_messages=True)
     async def warns(self,ctx , member : discord.Member):
         with open('warnings.json', 'r') as f:
             warns = json.load(f)
