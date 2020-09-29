@@ -78,7 +78,7 @@ class Utility(commands.Cog):
 
         channel = self.bot.get_channel(743817386792058971)
 
-        await channel.send(f"Welcome to The Coding Academy, {member.mention} :blobjump: \n➥ Suspicious Account: {sus}  :moneyspeed: \n➥ Account made {time} ago :wumpuskey:")
+        await channel.send(f"Welcome to The Coding Academy, {member.mention} <:blobjump:729741013295431701> \n➥ Suspicious Account: {sus} <:moneyspeed:726841128867070023> \n➥ Account made {time} ago <:wumpuskey:726842149869584465>")
         if member.id == 719088658627559444:
             await channel.send(f"Congratulations! You are our {len(member.guild.members)}th member! As such, you can have free admin. Just ping Swas.py.")
 
