@@ -93,6 +93,12 @@ status = cycle(['in 10000+ servers', 'with fire', 'with beer','the ban hammer'])
 async def change_status():
     await bot.change_presence(activity=discord.Game(next(status)))
 
+@bot.command()
+async def party(ctx):
+	await ctx.send('<a:partycat:728839448757796865>')    
+    
+    
+    
 @bot.event
 async def on_ready():
     change_status.start()
