@@ -5,3 +5,5 @@ wikipedia
 praw
 requests
 pillow
+captcha
+ffmpeg 
