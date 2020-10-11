@@ -60,6 +60,7 @@ class Info(commands.Cog):
 
     @commands.command(aliases=['whois', 'userinfo'])
     async def user(self,ctx, member: discord.Member):
+        pos = sum(m.joined_at < member.joined_at for m in ctx.guild.members if m.joined_at is not None)
         roles = [role for role in member.roles]
         embed = discord.Embed(color=member.color, timestamp=datetime.datetime.utcnow())
         embed.set_author(name=f"{member}", icon_url=member.avatar_url)
@@ -70,6 +71,7 @@ class Info(commands.Cog):
         embed.add_field(name='Status?', value=f'{member.status}')
         embed.add_field(name='Top Role?', value=f'{member.top_role}')
         embed.add_field(name=f"Roles ({len(roles)})", value=" ".join([role.mention for role in roles[:1]]))
+        embed.add_field(name='Join position', value=pos)
         embed.set_footer(icon_url=member.avatar_url, text=f'Requested By: {ctx.author.name}')
         await ctx.send(embed=embed)
 
