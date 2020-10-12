@@ -59,7 +59,9 @@ class Info(commands.Cog):
             msg.add_reaction('\u274E')
 
     @commands.command(aliases=['whois', 'userinfo'])
-    async def user(self,ctx, member: discord.Member):
+    async def user(self,ctx, member: discord.Member = None):
+        if member == None:
+            member = ctx.author
         pos = sum(m.joined_at < member.joined_at for m in ctx.guild.members if m.joined_at is not None)
         roles = [role for role in member.roles]
         embed = discord.Embed(color=member.color, timestamp=datetime.datetime.utcnow())
