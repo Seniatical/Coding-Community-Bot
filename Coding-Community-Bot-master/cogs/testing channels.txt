@@ -1,0 +1,139 @@
+import discord
+import io
+import sys
+import asyncio
+import contextlib
+import datetime
+from discord.ext import commands, tasks
+
+class Channels(commands.Cog, name = 'channels'):
+
+    def __init__ (self,bot):
+        self.bot = bot
+        self.bot.hp1 = False
+        self.active1 = False
+
+    @commands.Cog.listener()
+    async def on_ready(self):
+        self.stats.start()
+        self.check.start()
+
+    @tasks.loop(seconds = 5)
+    async def check(self):
+        await self.check_activity()
+    
+    @tasks.loop(seconds = 5)
+    async def stats(self):
+        print('Help Channels Status Report: ')
+        print(f"Occupation Status Help Channel 1: {self.bot.hp1}")
+        print(f"Activity of Help Channel 1: {self.active1}")
+
+    async def check_activity(self):
+        channels = ['763187874911879169']
+        rn = datetime.datetime.utcnow()
+        for x in channels:
+            channel = self.bot.get_channel(int(x))
+            try:
+                chk = await channel.history(limit = 1).next()
+            except:
+                pass
+            idle = rn - chk.created_at
+            idle = idle.total_seconds()
+            print(f"Idle Time: {idle}")
+            if int(x) == 763187874911879169 and idle > 10 and self.bot.hp1 == True:
+                print('Inactive Channel')
+                self.active1 = False
+            elif int(x) == 763187874911879169 and idle < 10 and self.bot.hp1 == True:
+                self.active1 = True
+
+    @commands.Cog.listener()
+    async def on_message(self,message):
+        try:
+            cata = self.bot.get_channel(763187909859475526)
+            back = self.bot.get_channel(759198536662646836)
+            try:
+                role = discord.utils.get(message.guild.roles, name = 'On Patrol Helper 🚨')
+            except:
+                pass
+            if message.channel.id == 763187874911879169 and message.author.bot == False:
+                if self.bot.hp1 == True:
+                    pass
+                else:
+                    if self.bot.hp1 == False:
+                        embed = discord.Embed(title = f'You have just claimed {message.channel.name}.',
+                        description = 'You would not be able to claim any other help channels for 15 minutes.', color = discord.Colour.from_rgb(255,221,170))
+                        embed.add_field(name = f'When asking questions: ', value = "Don't just say `i need help`, just state your question and hopefully someone comes to help.")
+                        embed.add_field(name = f'If you need someones attention: ', value = f"Ping {role.mention}, they would be happy to help.")
+                        await message.channel.send(embed = embed)
+                        cool = discord.utils.get(message.guild.roles, name = 'Cooldown')
+                        await message.author.add_roles(cool)
+                        await message.channel.edit(category = cata, sync_permissions = True)
+                        self.bot.hp1 = True
+                        self.active1 = True
+                        await asyncio.sleep(30)
+                        while True:
+                            while self.active1 == True:
+                                print("LOOP")
+                                await asyncio.sleep(15)
+                                await message.author.remove_roles(cool)
+                                print("LOOP DONE")
+                            if self.active1 == False:
+                                print('DONE')
+                                await message.channel.edit(category = back)
+                                embed2 = discord.Embed(title = 'This channel was closed due to inactivity.',
+                                description = 'If you still have problems, just claim another help channel.', color = discord.Colour.from_rgb(255,221,170))
+                                await message.channel.send(embed = embed2)
+                                self.bot.hp1 = False
+                                break
+        except:
+            pass
+                    
+    @commands.command()
+    async def close(self,ctx):
+        cata = self.bot.get_channel(759198536662646836)
+        if ctx.channel.id == 763187874911879169 and ctx.author.id != 7755479510387916871:
+            await ctx.channel.edit(category = cata, sync_permissions = True)
+            embed = discord.Embed(title = f"This channel is now open for help.",
+             description = 'If you still need help, wait 15 minutes and then take another open channel.', color = discord.Colour.from_rgb(255,221,170))
+            await ctx.send(embed = embed)
+            if ctx.channel.id == 763187874911879169:
+                self.bot.hp1 = False
+
+    @commands.command(aliases = ['verifythem'])
+    async def vt(self,ctx, member:discord.Member):
+        role = discord.utils.get(ctx.guild.roles, name = 'Member')
+        await member.add_roles(role)
+        take = discord.utils.get(ctx.guild.roles, name = 'Unverified')
+        await member.remove_roles(take)
+        await ctx.send(f"{member.mention} Has been Successfully Verified!")
+                
+    '''@commands.command()
+    async def eval(self,ctx,*,code:str):
+        try:
+            if code.startswith('```py') and code.endswith('```'):
+                code = code[5:-3]
+            elif code.startswith('`') and code.endswith('`'):
+                code = code[1:-1]
+            @contextlib.contextmanager
+            def evaluate(stdout = None):
+                old = sys.stdout
+                if stdout == None:
+                    sys.stdout = io.StringIO()
+                yield sys.stdout
+                sys.stdout = old
+            
+            with evaluate() as e:
+                exec(code, {})
+
+            msg = await ctx.send('Evaluating...')
+            await msg.delete()
+            await ctx.send(f"{ctx.author.mention} Finished Evaluating!")
+            embed = discord.Embed(title = f'Results: \n', description = e.getvalue(), color = discord.Colour.from_rgb(255,221,170))
+            await ctx.send(embed = embed)
+        except Exception as e:
+            embed = discord.Embed(title = 'Ran into a error while evaluating...')
+            embed.add_field(name = 'Error: ', value = e)
+            await ctx.send(embed = embed)'''
+
+def setup(bot):
+    bot.add_cog(Channels(bot))
