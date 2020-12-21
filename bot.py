@@ -13,12 +13,22 @@ from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 
-bot = commands.Bot(command_prefix = 'not ')
+bot = commands.Bot(command_prefix = 'not ', case_insensitive=True, intents=discord.Intents.all())
 bot.remove_command('help')
 
 @bot.event
 async def on_connect():
     print('Connected to Discord')
+
+class NotSwas(Exception):
+	pass
+
+def IsSwas():
+	async def predicate(ctx):
+		if ctx.author.id != 556119013298667520:
+			raise NotSwas('This is person is not swas.')
+		return True
+	commands.check(predicate)
 
 @bot.event
 async def on_member_join(member):
@@ -61,21 +71,21 @@ async def on_member_update(before,after):
         pass
 
 @bot.command()
-@commands.is_owner()
+@IsSwas()
 async def enable(ctx, extension):
     bot.load_extension(f'cogs.{extension}')
     embed = discord.Embed(title = ':white_check_mark: **Successfully Enabled ' + extension + '.**')
     await ctx.send(embed = embed)
 
 @bot.command()
-@commands.is_owner()
+@IsSwas()
 async def disable(ctx,extension):
     bot.unload_extension(f'cogs.{extension}')
     embed = discord.Embed(title = ':white_check_mark: **Successfully disabled ' + extension + '.**')
     await ctx.send(embed = embed)
 
 @bot.command()
-@commands.is_owner()
+@IsSwas()
 async def reload(ctx,extension):
     bot.unload_extension(f'cogs.{extension}')
     bot.load_extension(f'cogs.{extension}')
@@ -117,6 +127,8 @@ async def on_command_error(ctx,error):
     await ctx.send(embed = embed)
   elif isinstance(error, commands.CommandNotFound):
     pass
+  elif isinstance(error, NotSwas):
+	await ctx.send('Your not Swas.py#7370!')
 
 bot.run('TOKEN')
 
